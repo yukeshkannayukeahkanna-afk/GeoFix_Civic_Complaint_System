@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator - GeoFix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .canvas-container {
+            display: none;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        h1 {
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 GeoFix Icon Generator</h1>
+    <p>Click the button below to generate placeholder icons for your PWA.</p>
+    
+    <button onclick="generateAllIcons()">Generate All Icons</button>
+    
+    <div id="status" class="status"></div>
+    
+    <div class="canvas-container">
+        <canvas id="iconCanvas"></canvas>
+    </div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        function createIcon(size) {
+            const canvas = document.getElementById('iconCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = size;
+            canvas.height = size;
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#2563eb');
+            gradient.addColorStop(1, '#1d4ed8');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Add rounded corners effect
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            const radius = size * 0.15;
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.globalCompositeOperation = 'source-over';
+            
+            // Add wrench icon
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🔧', size / 2, size / 2);
+            
+            // Add text for smaller icons
+            if (size <= 152) {
+                ctx.font = `bold ${size * 0.15}px Arial`;
+                ctx.fillText('GF', size / 2, size * 0.75);
+            }
+            
+            return canvas.toDataURL('image/png');
+        }
+        
+        async function downloadIcon(dataUrl, size) {
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = dataUrl;
+            link.click();
+        }
+        
+        async function generateAllIcons() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '<p>Generating icons...</p>';
+            
+            let generatedCount = 0;
+            
+            for (const size of sizes) {
+                const dataUrl = createIcon(size);
+                await downloadIcon(dataUrl, size);
+                generatedCount++;
+                statusDiv.innerHTML = `<p>Generated ${generatedCount} of ${sizes.length} icons...</p>`;
+                
+                // Small delay between downloads
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+            
+            statusDiv.className = 'status success';
+            statusDiv.innerHTML = `
+                <p><strong>✅ Success!</strong> Generated ${generatedCount} icons.</p>
+                <p><strong>Next Steps:</strong></p>
+                <ol>
+                    <li>Move all downloaded PNG files from your Downloads folder to the <code>icons/</code> folder</li>
+                    <li>Reload your app to see the icons working</li>
+                    <li>(Optional) Replace these with custom icons later using <a href="https://favicon.io/favicon-converter/" target="_blank">favicon.io</a></li>
+                </ol>
+            `;
+        }
+    </script>
+</body>
+</html>

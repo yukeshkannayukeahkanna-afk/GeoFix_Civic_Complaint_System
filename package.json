@@ -1,0 +1,54 @@
+{
+  "name": "geofix-app",
+  "version": "1.0.0",
+  "description": "GeoFix - Civic Issue Resolution System with GPS Verification",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 8080 -o",
+    "build": "echo 'Web app is ready for deployment'",
+    "capacitor:init": "npx cap init GeoFix com.geofix.app --web-dir=.",
+    "capacitor:add:android": "npx cap add android",
+    "capacitor:add:ios": "npx cap add ios",
+    "capacitor:sync": "npx cap sync",
+    "capacitor:open:android": "npx cap open android",
+    "capacitor:open:ios": "npx cap open ios",
+    "android:build": "npx cap sync android && cd android && ./gradlew assembleRelease",
+    "ios:build": "npx cap sync ios && cd ios/App && xcodebuild -workspace App.xcworkspace -scheme App -configuration Release",
+    "serve": "npx http-server -p 8080",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "civic",
+    "complaints",
+    "gps",
+    "pwa",
+    "mobile-app",
+    "geolocation",
+    "civic-engagement"
+  ],
+  "author": "GeoFix Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@capacitor/cli": "^5.0.0",
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/camera": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/geolocation": "^5.0.0",
+    "@capacitor/ios": "^5.0.0",
+    "@capacitor/keyboard": "^5.0.0",
+    "@capacitor/push-notifications": "^5.0.0",
+    "@capacitor/splash-screen": "^5.0.0",
+    "@capacitor/status-bar": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/geofix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/geofix/issues"
+  },
+  "homepage": "https://geofix.app"
+}

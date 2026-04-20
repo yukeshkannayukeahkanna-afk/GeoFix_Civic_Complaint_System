@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Submit a civic complaint with live camera and GPS verification on GeoFix">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Submit Complaint - GeoFix</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="js/install-app.js" defer></script>
+</head>
+<body>
+    <div class="complaint-container">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                    <h1>GeoFix</h1>
+                </div>
+                <nav class="header-nav">
+                    <a href="index.html">Home</a>
+                    <a href="dashboard.html">My Dashboard</a>
+                    <a href="login.html">Logout</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Form -->
+        <div class="complaint-form-wrapper">
+            <div class="form-header">
+                <h2>📝 Submit Civic Complaint</h2>
+                <p>Report issues with live camera and GPS verification</p>
+            </div>
+
+            <form id="complaintForm" class="complaint-form">
+                
+                <!-- Issue Category Dropdown -->
+                <div class="form-section">
+                    <h3>📂 Issue Category</h3>
+                    <div class="form-group">
+                        <label for="category">Select Category *</label>
+                        <select id="category" name="category" required>
+                            <option value="">-- Choose an issue type --</option>
+                            <option value="pothole">🕳️ Pothole</option>
+                            <option value="garbage">🗑️ Garbage</option>
+                            <option value="water-leakage">💧 Water Leakage</option>
+                            <option value="streetlight">💡 Streetlight Issue</option>
+                            <option value="others">📋 Others</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Live Camera Section -->
+                <div class="form-section camera-section">
+                    <h3>📸 Live Camera Capture</h3>
+                    <p class="section-note">Select an issue category above first, then take a live photo. The image will be validated to ensure it matches the selected problem type.</p>
+                    
+                    <div class="camera-wrapper">
+                        <div class="camera-placeholder" id="cameraPlaceholder">
+                            <div class="placeholder-icon">📷</div>
+                            <p class="placeholder-text">Click "Start Camera" to begin</p>
+                        </div>
+                        <video id="cameraPreview" class="camera-preview" autoplay playsinline></video>
+                        <canvas id="captureCanvas" class="capture-canvas"></canvas>
+                        <img id="capturedImage" class="captured-image" alt="Captured image">
+                    </div>
+
+                    <div class="camera-controls">
+                        <button type="button" id="startCameraBtn" class="btn-camera">
+                            📷 Start Camera
+                        </button>
+                        <button type="button" id="captureBtn" class="btn-capture" disabled>
+                            ✓ Capture Image
+                        </button>
+                        <button type="button" id="retakeBtn" class="btn-retake" style="display: none;">
+                            🔄 Retake
+                        </button>
+                    </div>
+
+                    <div class="camera-status" id="cameraStatus">
+                        <p>Click "Start Camera" to begin</p>
+                    </div>
+                </div>
+
+                <!-- Live GPS Section -->
+                <div class="form-section gps-section">
+                    <h3>📍 Live GPS Location</h3>
+                    <p class="section-note">Your location will be automatically captured</p>
+                    
+                    <div class="gps-info">
+                        <div class="gps-field">
+                            <label>Latitude:</label>
+                            <span id="latitudeDisplay">Not captured yet</span>
+                        </div>
+                        <div class="gps-field">
+                            <label>Longitude:</label>
+                            <span id="longitudeDisplay">Not captured yet</span>
+                        </div>
+                        <div class="gps-field">
+                            <label>Accuracy:</label>
+                            <span id="accuracyDisplay">-</span>
+                        </div>
+                    </div>
+
+                    <button type="button" id="getLocationBtn" class="btn-location">
+                        📍 Get Live Location
+                    </button>
+
+                    <div class="gps-status" id="gpsStatus">
+                        <p>Click to fetch your live GPS coordinates</p>
+                    </div>
+
+                    <!-- Map Preview -->
+                    <div id="mapPreview" class="map-preview" style="display: none;">
+                        <iframe id="mapFrame" frameborder="0" allowfullscreen></iframe>
+                    </div>
+
+                    <!-- Hidden fields for form submission -->
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                    <input type="hidden" id="capturedImageData" name="imageData">
+                </div>
+
+                <!-- Description Box -->
+                <div class="form-section">
+                    <h3>🧾 Issue Description</h3>
+                    <div class="form-group">
+                        <label for="description">Describe the issue *</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            rows="5" 
+                            placeholder="Provide details about the civic issue..."
+                            required
+                        ></textarea>
+                        <span class="char-count" id="charCount">0 / 500 characters</span>
+                    </div>
+                </div>
+
+                <!-- Timestamp Display -->
+                <div class="form-section timestamp-section">
+                    <div class="timestamp-info">
+                        <div class="info-icon">⏱️</div>
+                        <div>
+                            <strong>Timestamp:</strong>
+                            <p id="timestampDisplay">Will be auto-generated on submission</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn" class="btn-submit-complaint" disabled>
+                        🚀 Submit Complaint
+                    </button>
+                    <p class="submit-note">
+                        ⚠️ Ensure camera image is captured, validated as relevant to the issue type, and GPS location is captured before submitting
+                    </p>
+                </div>
+
+            </form>
+
+            <!-- Validation Messages -->
+            <div id="validationAlert" class="alert" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="js/complaint.js"></script>
+    <script>
+        // Simple mobile scroll fix
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.height = '';
+        document.body.style.height = '';
+        
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW registration failed'));
+        }
+        
+        // Copy protection (desktop only, allow mobile interaction)
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.addEventListener('contextmenu', (e) => { if (!e.target.matches('input, textarea, a')) e.preventDefault(); });
+            document.addEventListener('copy', (e) => { if (!e.target.matches('input, textarea')) e.preventDefault(); });
+            document.addEventListener('cut', (e) => { if (!e.target.matches('input, textarea')) e.preventDefault(); });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (!e.target.matches('input, textarea') && ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'x' || e.key === 'a' || e.key === 'u' || e.key === 's'))) e.preventDefault();
+        });
+    </script>
+</body>
+</html>

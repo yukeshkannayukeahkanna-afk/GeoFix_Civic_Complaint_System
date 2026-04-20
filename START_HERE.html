@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoFix Setup Instructions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .option {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .option h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .steps {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        .steps li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        .command {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px 10px 10px 0;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 GeoFix Setup</h1>
+        <p class="subtitle">Your app is ready! Just need to start a local server...</p>
+
+        <div class="warning">
+            <strong>⚠️ Important:</strong> To test PWA features (app installation), you need to run a local web server. Just opening the HTML file won't work for PWA installation.
+        </div>
+
+        <h2>🎯 Quick Start - Choose One Method:</h2>
+
+        <div class="option">
+            <h3>✅ Option 1: Install Python (Easiest)</h3>
+            <ol class="steps">
+                <li>Download Python: <a href="https://www.python.org/downloads/" target="_blank" class="btn">Download Python</a></li>
+                <li><strong>Important:</strong> Check "Add Python to PATH" during installation!</li>
+                <li>After install, open PowerShell in this folder and run:</li>
+            </ol>
+            <div class="command">python -m http.server 8080</div>
+            <p>Or simply double-click: <code>start-app.bat</code></p>
+            <p>Then open: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
+        </div>
+
+        <div class="option">
+            <h3>✅ Option 2: Install Node.js</h3>
+            <ol class="steps">
+                <li>Download Node.js: <a href="https://nodejs.org/" target="_blank" class="btn">Download Node.js</a></li>
+                <li>After install, open PowerShell and run:</li>
+            </ol>
+            <div class="command">npx http-server -p 8080 -o</div>
+            <p>Or simply double-click: <code>start-app.bat</code></p>
+        </div>
+
+        <div class="option">
+            <h3>✅ Option 3: Use VS Code Live Server (If you have VS Code)</h3>
+            <ol class="steps">
+                <li>Open this folder in VS Code</li>
+                <li>Install "Live Server" extension</li>
+                <li>Right-click on <code>index.html</code></li>
+                <li>Click "Open with Live Server"</li>
+            </ol>
+        </div>
+
+        <div class="option">
+            <h3>✅ Option 4: Use PHP (If installed)</h3>
+            <div class="command">php -S localhost:8080</div>
+        </div>
+
+        <h2>📱 After Server Starts:</h2>
+        <div class="success">
+            <ol class="steps">
+                <li>Your browser will open to <strong>http://localhost:8080</strong></li>
+                <li>Look for the <strong>"Install App"</strong> button at the bottom right</li>
+                <li>Click it to install GeoFix as a mobile app!</li>
+                <li>Find the app icon on your home screen/desktop</li>
+            </ol>
+        </div>
+
+        <h2>🔧 Troubleshooting:</h2>
+        <div class="steps">
+            <li><strong>Can't install Python/Node?</strong> Try Option 3 (VS Code) or ask your IT admin</li>
+            <li><strong>Port 8080 is busy?</strong> Use a different port: <code>python -m http.server 3000</code></li>
+            <li><strong>Still stuck?</strong> Check the full guide in <code>APP_INSTALLATION_GUIDE.md</code></li>
+        </div>
+
+        <h2>📚 Documentation:</h2>
+        <div class="steps">
+            <li><code>APP_README.md</code> - Complete app overview</li>
+            <li><code>APP_INSTALLATION_GUIDE.md</code> - User installation guide</li>
+            <li><code>NATIVE_APP_BUILD_GUIDE.md</code> - Build native Android/iOS apps</li>
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; text-align: center; color: #999;">
+            <p>GeoFix - Civic Issue Resolution Platform</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Made with ❤️ for better communities</p>
+        </div>
+    </div>
+</body>
+</html>

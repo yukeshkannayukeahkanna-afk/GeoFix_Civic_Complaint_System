@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="View and track your civic complaints on GeoFix Dashboard">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>My Dashboard - GeoFix</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/install-app.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                    <h1>GeoFix</h1>
+                </div>
+                <nav class="header-nav">
+                    <a href="index.html">Home</a>
+                    <a href="submit-complaint.html">+ Submit Complaint</a>
+                    <a href="dashboard.html" class="active">My Dashboard</a>
+                    <a href="login.html">Logout</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <div class="header-title-section">
+                    <div class="header-icon-wrapper">
+                        <svg class="header-dashboard-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>My Complaints Dashboard</h2>
+                        <p class="welcome-text">Welcome back, <span id="userName" class="user-name-highlight">sukumar</span> 👋</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="refreshBtn" class="btn-refresh" onclick="refreshDashboard()">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clip-rule="evenodd" />
+                        </svg>
+                        Refresh
+                    </button>
+                    <a href="submit-complaint.html" class="btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                        New Complaint
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-info">
+                        <h3 id="totalComplaints">0</h3>
+                        <p>Total Complaints</p>
+                    </div>
+                </div>
+                <div class="stat-card pending">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <h3 id="pendingComplaints">0</h3>
+                        <p>Pending</p>
+                    </div>
+                </div>
+                <div class="stat-card progress">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-info">
+                        <h3 id="inProgressComplaints">0</h3>
+                        <p>In Progress</p>
+                    </div>
+                </div>
+                <div class="stat-card resolved">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <h3 id="resolvedComplaints">0</h3>
+                        <p>Resolved</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Options -->
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="categoryFilter">Filter by Category:</label>
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="pothole">Pothole</option>
+                        <option value="garbage">Garbage</option>
+                        <option value="water-leakage">Water Leakage</option>
+                        <option value="streetlight">Streetlight</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Complaints List -->
+            <div class="complaints-section">
+                <h3>My Submitted Complaints</h3>
+                <div id="complaintsList" class="complaints-list">
+                    <!-- Complaints will be loaded here dynamically -->
+                </div>
+                <div id="noComplaints" class="no-data">
+                    <div class="no-data-illustration">
+                        <svg class="empty-state-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="100" cy="100" r="90" fill="#e0e7ff" opacity="0.3"/>
+                            <circle cx="100" cy="100" r="70" fill="#c7d2fe" opacity="0.4"/>
+                            <circle cx="100" cy="100" r="50" fill="#a5b4fc" opacity="0.5"/>
+                            <path d="M70 100 L100 70 L130 100 L100 130 Z" fill="#6366f1" opacity="0.6"/>
+                            <circle cx="100" cy="100" r="15" fill="#4f46e5"/>
+                        </svg>
+                    </div>
+                    <h3 class="no-data-title">No Complaints Yet</h3>
+                    <p class="no-data-description">You haven't submitted any civic issues yet. Start making a difference in your community by reporting problems that need attention.</p>
+                    <div class="no-data-actions">
+                        <a href="submit-complaint.html" class="btn-primary btn-large">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                            </svg>
+                            Submit Your First Complaint
+                        </a>
+                    </div>
+                    <div class="quick-tips">
+                        <p class="quick-tips-title">💡 Quick Tips:</p>
+                        <ul class="quick-tips-list">
+                            <li>📸 Take clear photos of the issue</li>
+                            <li>📍 Enable GPS for accurate location</li>
+                            <li>✍️ Provide detailed descriptions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Card Template (hidden, used by JavaScript) -->
+    <template id="complaintCardTemplate">
+        <div class="complaint-card">
+            <div class="complaint-image">
+                <img src="" alt="Complaint image">
+            </div>
+            <div class="complaint-details">
+                <div class="complaint-header">
+                    <h4 class="complaint-id">ID: #</h4>
+                    <span class="status-badge"></span>
+                </div>
+                <div class="complaint-category">
+                    <span class="category-icon"></span>
+                    <span class="category-name"></span>
+                </div>
+                <p class="complaint-description"></p>
+                <div class="complaint-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">📅</span>
+                        <span class="meta-text date"></span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">⏰</span>
+                        <span class="meta-text time"></span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">📍</span>
+                        <span class="meta-text location"></span>
+                    </div>
+                </div>
+                <div class="complaint-actions">
+                    <button class="btn-view-map" onclick="viewOnMap()">
+                        🗺️ View on Map
+                    </button>
+                    <button class="btn-details" onclick="viewDetails()">
+                        👁️ View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="js/dashboard.js"></script>
+    <script>
+        // Simple mobile scroll fix
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.height = '';
+        document.body.style.height = '';
+        
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW registration failed'));
+        }
+        
+        // Copy protection (desktop only, allow mobile interaction)
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.addEventListener('contextmenu', (e) => { if (!e.target.matches('input, textarea, a')) e.preventDefault(); });
+            document.addEventListener('copy', (e) => { if (!e.target.matches('input, textarea')) e.preventDefault(); });
+            document.addEventListener('cut', (e) => { if (!e.target.matches('input, textarea')) e.preventDefault(); });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (!e.target.matches('input, textarea') && ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'x' || e.key === 'a' || e.key === 'u' || e.key === 's'))) e.preventDefault();
+        });
+    </script>
+</body>
+</html>

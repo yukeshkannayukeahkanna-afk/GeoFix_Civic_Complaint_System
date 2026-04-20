@@ -1,0 +1,12 @@
+# robots.txt for GeoFix
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://yourwebsite.com/sitemap.xml
+
+# Disallow sensitive pages
+Disallow: /admin-dashboard.html
+Disallow: /js/
+Disallow: /css/

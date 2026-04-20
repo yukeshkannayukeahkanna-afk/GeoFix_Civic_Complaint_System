@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 Access GeoFix on Your Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .qr-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .url-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            word-break: break-all;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .url-box:hover {
+            background: #3d3d3d;
+            transform: scale(1.02);
+        }
+        .copy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .copy-btn:hover {
+            transform: translateY(-2px);
+        }
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        .steps {
+            text-align: left;
+            margin: 30px 0;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+        }
+        .steps h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        .status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+        #copyMessage {
+            display: none;
+            color: #28a745;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Access GeoFix on Mobile</h1>
+        <p class="subtitle">Scan the QR code or use the link below</p>
+
+        <div class="status online">✓ Server is Running</div>
+
+        <div class="qr-container">
+            <div class="qr-code" id="qrcode"></div>
+            <p style="margin-top: 15px; color: #666;">Scan with your phone camera</p>
+        </div>
+
+        <h3 style="color: #764ba2; margin-bottom: 15px;">📲 Or type this URL on your mobile:</h3>
+        <div class="url-box" onclick="copyUrl()" id="urlBox">
+            http://10.143.245.156:5500
+        </div>
+        
+        <button class="copy-btn" onclick="copyUrl()">📋 Copy Link</button>
+        <div id="copyMessage">✓ Link copied to clipboard!</div>
+
+        <div class="steps">
+            <h3>📝 How to Access:</h3>
+            <ol>
+                <li><strong>Make sure your phone is on the same WiFi</strong> as this computer</li>
+                <li><strong>Scan the QR code above</strong> with your phone's camera app</li>
+                <li>OR <strong>open your mobile browser</strong> (Chrome/Safari) and type the URL above</li>
+                <li>The GeoFix app will load on your phone!</li>
+                <li>Look for the <strong>"Install App"</strong> button to install it</li>
+            </ol>
+        </div>
+
+        <div class="success">
+            <strong>✨ After accessing on mobile:</strong>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li>You'll see the "Install App" button (bottom right)</li>
+                <li>On iOS: Tap Share → Add to Home Screen</li>
+                <li>On Android: Tap the install button in browser</li>
+                <li>The app will be added to your home screen!</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Important:</strong> Keep this computer running and don't close the Live Server. Your phone needs to connect to this computer to access the app.
+        </div>
+
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee;">
+            <p style="color: #999;">Server Address: <strong style="color: #333;">10.143.245.156:5500</strong></p>
+            <p style="color: #999; margin-top: 10px; font-size: 0.9rem;">GeoFix - Civic Issue Resolution</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR Code
+        const url = "http://10.143.245.156:5500";
+        new QRCode(document.getElementById("qrcode"), {
+            text: url,
+            width: 200,
+            height: 200,
+            colorDark: "#667eea",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Copy URL function
+        function copyUrl() {
+            const url = document.getElementById('urlBox').textContent.trim();
+            navigator.clipboard.writeText(url).then(() => {
+                const message = document.getElementById('copyMessage');
+                message.style.display = 'block';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 3000);
+            });
+        }
+
+        // Make URL clickable on mobile
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.getElementById('urlBox').innerHTML = '<a href="' + url + '" style="color: #f8f8f2; text-decoration: none;">' + url + '</a>';
+        }
+    </script>
+</body>
+</html>
