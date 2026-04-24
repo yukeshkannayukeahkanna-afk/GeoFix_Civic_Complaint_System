@@ -356,6 +356,16 @@ For questions, issues, or contributions:
 
 ---
 
-**Built with ❤️ for better communities**
+## 👨‍💻 Author
 
-*GeoFix - Making civic reporting transparent and verified*
+**Yukeshkanna P**
+B.Tech AI & Data Science
+Aspiring Software Developer
+
+---
+
+## Connect
+
+LinkedIn: [www.linkedin.com/in/yukeshkanna022007]
+
+GitHub: [https://github.com/yukeshkannayukeahkanna-afk]
